@@ -1,48 +1,40 @@
-#!/usr/bin/env bash
-#is a challenge
-check_factor()
-{
-	if [ $# -ne 3 ];
-        then
-                args=("$@")
-                count=0
-                num2=1
-                for a in ${args[*]};
-                do
-                        if [ $count -gt 1 ];
-                        then
-                                num2=$(echo $a*$num2 | bc)
-                        fi
-                        count=$((count + 1))
-                done
-        else
-                num2=$3
-        fi
+#!/usr/bin/python3
+from sys import argv
+from linecache import getline
 
-        num1=$2
-        num=$(echo "$1" | tr ':' '=')
 
-        result=$(echo "if($num2 > $num1) 1 else 0" | bc)
-	        if ((result == 1)); then
-		        numcp=$num1
-		        num1=$num2
-		        num2=$numcp
-                fi
+def first_prime_factor(n: int) -> int:
+    if n <= 3:
+        return (2)
+    if n % 2 == 0:
+        return (2)
+    if n % 3 == 0:
+        return (3)
+    limit = int(n**0.5)
+    if limit % 2 == 0:
+        limit = limit + 1
+    i, j = 5, limit
+    while i <= j:
+        if n % i == 0:
+            return (i)
+        if n % (i + 2) == 0:
+            return (i + 2)
+        if n % j == 0:
+            return (j)
+        if n % (j - 2) == 0:
+            return (j - 2)
+        i += 6
+        j -= 4
+    return (1)
 
-        echo "$num$num1*$num2"
-}
 
-if [ $# -ne 1 ]
-then
-        echo 'Usage: rsa <file>'
-        exit 1
-else
-
-        while read i
-        do
-
-                result=$(factor "$i")
-                check_factor $result
-
-        done < "$1"
-fi
+if __name__ == "__main__":
+    line = 1
+    while True:
+        line_str = getline(argv[1], line)
+        if (len(line_str) == 0):
+            break
+        num = int(line_str[:-1])
+        factor = first_prime_factor(num)
+        print("{}={}*{}".format(num, num // factor, factor))
+        line += 1
