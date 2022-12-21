@@ -151,4 +151,4 @@ julien@ubuntu:~/RSA Factoring Challenge$ [...]
 
 ## Authur
 
-- **Gordon Enam Kudzo** - [senam98](https://github.com/senam98)
+- **Adesanmi Dayo PraiseGod** - [deepraisegee](https://github.com/deepraisegee)
